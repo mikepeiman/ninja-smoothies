@@ -1,0 +1,13 @@
+.one {
+  color: green;
+}
+
+.two {
+  text-decoration: line-through;
+}
+
+.canvas {
+  width: 50vw;
+  height: 50vh;
+  background: #336699;
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>Vue Basics</h1>
+  <div id="app">
+    <button @click="logMessage">Click me</button>
+    <button @click.alt="logMessage">Alt-Click me</button>
+    <button @click.shift="logMessage">Shift-Click me</button>
+    <a href="http://google.com" @click="logMessage">Google</a>
+    <!-- the modifier '.prevent' invokes preventDefault() on the click event -->
+    
+    <a href="http://google.com" @click.prevent="logMessage">Google</a>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
