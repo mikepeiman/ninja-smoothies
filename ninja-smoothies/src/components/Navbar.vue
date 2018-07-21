@@ -1,4 +1,5 @@
 <template>
+
   <div class="navbar">
     <nav class="nav-extended indigo darken-2">
       <div class="nav-content">
@@ -34,9 +35,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .navbar nav {
   padding: 0 20px;
+  margin: 0;
 }
 nav .nav-content {
   display: flex;
