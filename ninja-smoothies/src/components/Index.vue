@@ -55,28 +55,29 @@ export default {
     };
   },
   methods: {
-    mouseOverDelete() {
-      const deleteIcon = document.querySelector('.delete')
-      if (!deleteIcon.classList.contains('red')) {
-        deleteIcon.classList.add('red')
+    mouseOverDelete(e) {
+      // my first method was to target the DOM elements by classname:
+      // const deleteIcon = document.querySelector('.delete')
+      //
+      // but then hovering icons for item #2, #3, etc targeted icons of #1.
+      // e.target is the solution
+      if (!e.target.classList.contains('red')) {
+        e.target.classList.add('red')
       }
     },
-    mouseOutDelete() {
-      const deleteIcon = document.querySelector('.delete')
-      if (deleteIcon.classList.contains('red')) {
-        deleteIcon.classList.remove('red')
+    mouseOutDelete(e) {
+      if (e.target.classList.contains('red')) {
+        e.target.classList.remove('red')
       }
     },
-    mouseOverEdit() {
-      const editIcon = document.querySelector('.edit')
-      if (!editIcon.classList.contains('purple')) {
-        editIcon.classList.add('purple')
+    mouseOverEdit(e) {
+      if (!e.target.classList.contains('purple')) {
+        e.target.classList.add('purple')
       }
     },
-    mouseOutEdit() {
-      const editIcon = document.querySelector('.edit')
-      if (editIcon.classList.contains('purple')) {
-        editIcon.classList.remove('purple')
+    mouseOutEdit(e) {
+      if (e.target.classList.contains('purple')) {
+        e.target.classList.remove('purple')
       }
     },
     deleteItem(id) {
