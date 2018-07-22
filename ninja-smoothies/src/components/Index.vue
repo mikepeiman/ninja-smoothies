@@ -4,8 +4,8 @@
   <div class="row">
     <div class="card blue-grey darken-1" v-for="smoothie in smoothies" :key="smoothie.id">
       <!-- <div class="card-action container"> -->
-      <i class="material-icons edit" @mouseover="mouseOverEdit" @mouseout="mouseOutEdit">edit</i>
-      <i class="material-icons delete" @mouseover="mouseOverDelete" @mouseout="mouseOutDelete">delete</i>
+      <i class="material-icons edit" @click="editItem(smoothie.id)" @mouseover="mouseOverEdit" @mouseout="mouseOutEdit">edit</i>
+      <i class="material-icons delete" @click="deleteItem(smoothie.id)" @mouseover="mouseOverDelete" @mouseout="mouseOutDelete">delete</i>
       <!-- </div> -->
       <div class="card-content white-text">
         <h2 class="card-title">{{ smoothie.title }}</h2>
@@ -54,31 +54,44 @@ export default {
     mouseOverDelete() {
       const deleteIcon = document.querySelector('.delete')
       if (!deleteIcon.classList.contains('red')) {
-        console.log('mouseover no red')
         deleteIcon.classList.add('red')
       }
     },
     mouseOutDelete() {
       const deleteIcon = document.querySelector('.delete')
       if (deleteIcon.classList.contains('red')) {
-        console.log('mouseout no red')
         deleteIcon.classList.remove('red')
       }
     },
     mouseOverEdit() {
       const editIcon = document.querySelector('.edit')
       if (!editIcon.classList.contains('purple')) {
-        console.log('mouseover no Purple')
         editIcon.classList.add('purple')
       }
     },
     mouseOutEdit() {
       const editIcon = document.querySelector('.edit')
       if (editIcon.classList.contains('purple')) {
-        console.log('mouseout no Purple')
         editIcon.classList.remove('purple')
       }
-    }
+    },
+    deleteItem(id) {
+      this.smoothies = this.smoothies.filter(smoothie => {
+        return smoothie.id !== id
+        // work with 'smoothies' array
+        // filter that array by the id of the smoothie that was clicked
+        // as the filter loops through the array, we check each item's id
+        // if the id of the current array item does NOT match the id we are
+        // checking for from the click, it returns TRUE, and stays in the array.
+        // if it DOES match, it returns FALSE and so that item is excluded from
+        // the new, filtered array
+      })
+    },
+    editItem(id) {
+      this.smoothies = this.smoothies.filter(smoothie => {
+        return smoothie.id !== id
+      })
+    },
   }
 }
 </script>
