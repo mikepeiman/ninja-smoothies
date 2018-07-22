@@ -2,6 +2,7 @@
 <div class="index container">
   <!-- <div class="col s12"> -->
   <div class="row">
+    <!-- <button id="logDB" @click="logDB">Log DB</button> -->
     <div class="card blue-grey darken-1" v-for="smoothie in smoothies" :key="smoothie.id">
       <!-- <div class="card-action container"> -->
       <i class="material-icons edit" @click="editItem(smoothie.id)" @mouseover="mouseOverEdit" @mouseout="mouseOutEdit">edit</i>
@@ -25,29 +26,32 @@
 </template>
 
 <script>
+import db from '@/firebase/init'
+
 export default {
   name: "Index",
   data() {
     return {
-      smoothies: [{
-          title: "Ninja Brew",
-          slug: "ninja-brew",
-          ingredients: ["bananas", "coffee", "milk"],
-          id: 1
-        },
-        {
-          title: "Super Chill",
-          slug: "super-chill",
-          ingredients: ["bananas", "coffee", "milk"],
-          id: 2
-        },
-        {
-          title: "Morning Boost",
-          slug: "morning-boost",
-          ingredients: ["bananas", "coffee", "milk"],
-          id: 3
-        }
-      ]
+      smoothies: []
+      // smoothies: [{
+      //     title: "Ninja Brew",
+      //     slug: "ninja-brew",
+      //     ingredients: ["bananas", "coffee", "milk"],
+      //     id: 1
+      //   },
+      //   {
+      //     title: "Super Chill",
+      //     slug: "super-chill",
+      //     ingredients: ["bananas", "coffee", "milk"],
+      //     id: 2
+      //   },
+      //   {
+      //     title: "Morning Boost",
+      //     slug: "morning-boost",
+      //     ingredients: ["bananas", "coffee", "milk"],
+      //     id: 3
+      //   }
+      // ]
     };
   },
   methods: {
@@ -92,6 +96,26 @@ export default {
         return smoothie.id !== id
       })
     },
+    logDB() {
+      console.log(db)
+    }
+  },
+  created() {
+    // fetch data from firestore
+    const smoothiesDB = db.collection('smoothies').get()
+    .then(snapshot => {
+      // snapshot = the state of our DB collection at this point in time
+      snapshot.forEach(doc => {
+        // each item in DB = doc. This contains all the info about that record, EXCEPT the data
+        console.log(doc.data(), doc.id)
+        // .data() needs parentheses, it is a method call
+        // the ID is not part of the data, it is a separate property
+        let smoothie = doc.data()
+        smoothie.id = doc.id
+        this.smoothies.push(smoothie)
+      })
+    })
+
   }
 }
 </script>
@@ -120,7 +144,9 @@ export default {
   justify-content: center;
   flex-direction: column;
 }
-
+.ingredients {
+  flex-wrap: wrap;
+}
 .card-action {
   display: flex;
   flex-direction: row;
