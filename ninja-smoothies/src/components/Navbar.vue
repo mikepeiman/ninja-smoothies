@@ -4,7 +4,8 @@
     <nav class="nav-extended indigo darken-2">
       <div class="nav-content">
         <div class="container">
-        <router-link to="">
+        <router-link :to="{ name: 'Home' }">
+          <!-- dynamic link mapping vs to="/" -->
           <span class="nav-title">Ninja Smoothies</span>
         </router-link>
         </div>
@@ -15,7 +16,7 @@
           </router-link>
         </a>        
         <a href="" class="btn-floating large halfway-fab pulse pink">
-          <router-link to="">
+          <router-link :to="{ name: 'AddItem' }">
             <i class="material-icons">add</i>
           </router-link>
         </a>
