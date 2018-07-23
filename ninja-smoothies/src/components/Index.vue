@@ -60,23 +60,23 @@ export default {
       //
       // but then hovering icons for item #2, #3, etc targeted icons of #1.
       // e.target is the solution
-      if (!e.target.classList.contains('red')) {
-        e.target.classList.add('red')
+      if (!e.target.classList.contains('red-text')) {
+        e.target.classList.add('red-text')
       }
     },
     mouseOutDelete(e) {
-      if (e.target.classList.contains('red')) {
-        e.target.classList.remove('red')
+      if (e.target.classList.contains('red-text')) {
+        e.target.classList.remove('red-text')
       }
     },
     mouseOverEdit(e) {
-      if (!e.target.classList.contains('purple')) {
-        e.target.classList.add('purple')
+      if (!e.target.classList.contains('purple-text')) {
+        e.target.classList.add('purple-text')
       }
     },
     mouseOutEdit(e) {
-      if (e.target.classList.contains('purple')) {
-        e.target.classList.remove('purple')
+      if (e.target.classList.contains('purple-text')) {
+        e.target.classList.remove('purple-text')
       }
     },
     deleteItem(id) {

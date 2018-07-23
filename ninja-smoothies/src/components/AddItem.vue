@@ -15,7 +15,7 @@
         <input id="add-ingredient" type="text" name="add-ingredient" @keydown.tab.prevent="addIngredient" v-model="anotherIngredient">
         <ul v-if="ingredients">
           <li v-for="(ingredient, index) in ingredients" :key="index" class="square-chip">{{ ingredient }}
-            <i class="material-icons delete" @click="deleteIngredient(ingredient)">delete</i>
+            <i class="material-icons delete" @click="deleteIngredient(ingredient)"  @mouseover="mouseOverDelete" @mouseout="mouseOutDelete">delete</i>
           </li>
         </ul>
       </div>
@@ -86,12 +86,32 @@ export default {
       this.ingredients = this.ingredients.filter(ing => {
         return ing !== ingredient
       })
+    },
+    mouseOverDelete(e) {
+      // my first method was to target the DOM elements by classname:
+      // const deleteIcon = document.querySelector('.delete')
+      //
+      // but then hovering icons for item #2, #3, etc targeted icons of #1.
+      // e.target is the solution
+      if (!e.target.classList.contains('red-text')) {
+        e.target.classList.add('red-text')
+      }
+    },
+    mouseOutDelete(e) {
+      if (e.target.classList.contains('red-text')) {
+        e.target.classList.remove('red-text')
+      }
     }
   }
 }
 </script>
 
 <style scoped>
+i.material-icons {
+  line-height: 1.7em;
+  margin: 0;
+  cursor: pointer;
+}
 .add-item {
   margin: 5em 0;
   padding: 1.25em;
@@ -129,10 +149,11 @@ export default {
 
 .square-chip {
   display: inline-flex;
+  align-items: center;
   min-width: 50px;
   background: rgba(50,75,100,0.25);
-  margin: 0 .5em;
-  padding: 5px 5px 5px 8px;
+  margin: .5em;
+  padding: 0px 5px 0px 8px;
   border-radius: 2px;
 }
 .square-chip i {
