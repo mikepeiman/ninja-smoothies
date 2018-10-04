@@ -11,7 +11,7 @@
         </div>
       <div class="container-column">
         <a href="" class="btn-floating large blue">
-          <router-link to="">
+          <router-link :to="{ name: 'Home'}">
             <i class="material-icons">menu</i>
           </router-link>
         </a>        

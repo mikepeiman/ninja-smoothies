@@ -4,7 +4,10 @@
   <div class="row">
     <div class="card blue-grey darken-1" v-for="smoothie in smoothies" :key="smoothie.id">
       <!-- <div class="card-action container"> -->
-      <i class="material-icons edit" @click="editItem(smoothie.id)" @mouseover="mouseOverEdit" @mouseout="mouseOutEdit">edit</i>
+        <router-link :to="{ name: 'EditItem', params: {item_slug: smoothie.slug} }">
+          <i class="material-icons edit" @click="editItem(smoothie.id)" @mouseover="mouseOverEdit" @mouseout="mouseOutEdit">edit</i>
+        </router-link>
+        
       <i class="material-icons delete" @click="deleteItem(smoothie.id)" @mouseover="mouseOverDelete" @mouseout="mouseOutDelete">delete</i>
       <!-- </div> -->
       <div class="card-content white-text">
@@ -83,45 +86,45 @@ export default {
       // delete item from firestore
       db.collection('smoothies').doc(id).delete()
         .then(() => {
-            this.smoothies = this.smoothies.filter(smoothie => {
-              return smoothie.id !== id
-            })
+          this.smoothies = this.smoothies.filter(smoothie => {
+            return smoothie.id !== id
+          })
 
-            // this.smoothies = this.smoothies.filter(smoothie => {
-            //   return smoothie.id !== id
-            //   // work with 'smoothies' array
-            //   // filter that array by the id of the smoothie that was clicked
-            //   // as the filter loops through the array, we check each item's id
-            //   // if the id of the current array item does NOT match the id we are
-            //   // checking for from the click, it returns TRUE, and stays in the array.
-            //   // if it DOES match, it returns FALSE and so that item is excluded from
-            //   // the new, filtered array
-            })
-          },
-          editItem(id) {
-            this.smoothies = this.smoothies.filter(smoothie => {
-              return smoothie.id !== id
-            })
-          }
-        },
-        created() {
-          // fetch data from firestore
-          const smoothiesDB = db.collection('smoothies').get()
-            .then(snapshot => {
-              // snapshot = the state of our DB collection at this point in time
-              snapshot.forEach(doc => {
-                // each item in DB = doc. This contains all the info about that record, EXCEPT the data
-                // console.log(doc.data(), doc.id)
-                // .data() needs parentheses, it is a method call
-                // the ID is not part of the data, it is a separate property
-                let smoothie = doc.data()
-                smoothie.id = doc.id
-                this.smoothies.push(smoothie)
-              })
-            })
-
-        }
+          // this.smoothies = this.smoothies.filter(smoothie => {
+          //   return smoothie.id !== id
+          //   // work with 'smoothies' array
+          //   // filter that array by the id of the smoothie that was clicked
+          //   // as the filter loops through the array, we check each item's id
+          //   // if the id of the current array item does NOT match the id we are
+          //   // checking for from the click, it returns TRUE, and stays in the array.
+          //   // if it DOES match, it returns FALSE and so that item is excluded from
+          //   // the new, filtered array
+        })
+    },
+    editItem(id) {
+      this.smoothies = this.smoothies.filter(smoothie => {
+        return smoothie.id !== id
+      })
     }
+  },
+  created() {
+    // fetch data from firestore
+    const smoothiesDB = db.collection('smoothies').get()
+      .then(snapshot => {
+        // snapshot = the state of our DB collection at this point in time
+        snapshot.forEach(doc => {
+          // each item in DB = doc. This contains all the info about that record, EXCEPT the data
+          // console.log(doc.data(), doc.id)
+          // .data() needs parentheses, it is a method call
+          // the ID is not part of the data, it is a separate property
+          let smoothie = doc.data()
+          smoothie.id = doc.id
+          this.smoothies.push(smoothie)
+        })
+      })
+
+  }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
