@@ -25,6 +25,7 @@
 
 <script>
 import db from '@/firebase/init'
+import slugify from 'slugify'
 
 export default {
   name: 'EditItem',
@@ -36,8 +37,29 @@ export default {
     }
   },
   methods: {
-    editItem() {
-      console.log(this.item.title, this.item.ingredients)
+        editItem() {
+      // console.log(this.title, this.ingredients)
+      if(this.item.title) {
+        this.feedback = null
+        // create a slug
+        this.item.slug = slugify(this.item.title, {
+          replacement: '-',
+          remove: /[$*_=~.()'"!\-:@]/g,
+          lower: true
+        })
+        console.log(`Slug: ${this.slug}`)
+        db.collection('smoothies').doc(this.item.id).update({
+          title: this.item.title,
+          ingredients: this.item.ingredients,
+          slug: this.item.slug
+        }).then(() => {
+          this.$router.push({ name: 'Index' })
+        }).catch(err => {
+          console.log(err)
+        })
+      } else {
+        this.feedback = 'Title is required'
+      }
     },
     addIngredient() {
       if(this.anotherIngredient) {
